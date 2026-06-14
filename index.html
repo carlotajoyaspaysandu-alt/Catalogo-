@@ -8,8 +8,9 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Playfair Display', 'Segoe UI', system-ui, -apple-system, sans-serif; }
         body { background-color: #fcf6f4; color: #5a4f48; padding-bottom: 100px; }
         
-        /* Encabezado con Logo - Inspirado en IMG-20260612-WA0048.jpg */
-        header { background-color: #f5e6e1; padding: 40px 15px; text-align: center; border-bottom: 1px solid #ebd6cf; box-shadow: 0 2px 10px rgba(191, 163, 111, 0.05); }
+        /* Encabezado con Logo - Basado en la imagen de marca */
+        header { background-color: #f5e6e1; padding: 35px 15px; text-align: center; border-bottom: 1px solid #ebd6cf; box-shadow: 0 2px 10px rgba(191, 163, 111, 0.05); }
+        header img { max-width: 130px; border-radius: 50%; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         header h1 { font-size: 32px; color: #a38752; letter-spacing: 6px; font-weight: 400; text-transform: uppercase; margin-bottom: 5px; }
         header p { font-size: 12px; color: #bfa36f; text-transform: uppercase; letter-spacing: 3px; font-weight: 600; }
         
@@ -59,6 +60,8 @@
 </head>
 <body>
     <header>
+        <!-- Integración de la imagen de marca de manera exacta -->
+        <img src="IMG-20260612-WA0048.jpg" alt="Logo Carlota">
         <h1>CARLOTA</h1>
         <p>Everyday Jewelry</p>
     </header>
@@ -102,13 +105,13 @@
     </div>
 
     <script>
-        const WHATSAPP_PHONE = "59898808548"; 
+        // Enlace telefónico configurado para tu cuenta de destino
+        const WHATSAPP_PHONE = "59896438057"; 
         const categories = ['caravanas', 'colgantes', 'anillos', 'ofertas', 'novedades'];
         let currentCatIndex = 0;
         let cart = [];
         let lastSelectedProduct = null;
 
-        // Catálogo actualizado con imágenes reales de joyería desde internet
         const backupCatalogData = {
             caravanas: [
                 { id: "ca1", name: "Aros de Argolla Dorados", desc: "Baño en oro de 18k", longDesc: "Argollas clásicas y minimalistas con un acabado brillante perfecto para el uso diario. Ligeras y combinables con cualquier look.", price: 350, img: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&auto=format&fit=crop&q=80" },
@@ -159,7 +162,6 @@
             currentCatIndex = index;
         }
 
-        // --- Lógica del Modal ---
         function openModal(cat, index) {
             const p = backupCatalogData[cat][index];
             lastSelectedProduct = { name: p.name, price: p.price };
@@ -178,7 +180,7 @@
             }
         }
 
-        // --- Lógica de Swipe ---
+        // Lógica de navegación táctil (Gesto Swipe)
         let touchStartX = 0;
         document.getElementById('swipe-container').addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
         document.getElementById('swipe-container').addEventListener('touchend', e => {
@@ -189,7 +191,6 @@
             }
         });
 
-        // --- Funciones Carrito ---
         function addToCart(name, price) {
             cart.push({ name, price });
             updateCartUI();
@@ -220,4 +221,4 @@
         renderCatalog();
     </script>
 </body>
-              </html>
+</html>
