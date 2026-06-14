@@ -8,7 +8,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
         body { background-color: #fcf6f4; color: #5a4f48; padding-bottom: 100px; }
         
-        /* Encabezado con animación secuencial */
+        /* Encabezado con la nueva secuencia de animación solicitada */
         header { 
             background-color: #f5e6e1; 
             padding: 35px 15px; 
@@ -27,15 +27,50 @@
             margin-bottom: 15px; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
             display: inline-block;
+            /* 4s de giro + 4s estático con expansión = 8 segundos en total por ciclo completo */
             animation: secuenciaLogo 8s ease-in-out infinite;
         }
 
+        /* Línea de tiempo de la animación personalizada */
         @keyframes secuenciaLogo {
-            0% { transform: rotate(0deg); border-radius: 50%; width: 130px; height: 130px; margin-bottom: 15px; }
-            50% { transform: rotate(360deg); border-radius: 50%; width: 130px; height: 130px; margin-bottom: 15px; }
-            55% { transform: rotate(360deg); border-radius: 0%; width: 100vw; height: 250px; margin-bottom: 25px; }
-            90% { transform: rotate(360deg); border-radius: 0%; width: 100vw; height: 250px; margin-bottom: 25px; }
-            100% { transform: rotate(360deg); border-radius: 50%; width: 130px; height: 130px; margin-bottom: 15px; }
+            /* 0% a 50% (Primeros 4 segundos): Giro lento y pausado en tamaño normal */
+            0% {
+                transform: rotate(0deg);
+                border-radius: 50%;
+                width: 130px;
+                height: 130px;
+                margin-bottom: 15px;
+            }
+            50% {
+                transform: rotate(360deg);
+                border-radius: 50%;
+                width: 130px;
+                height: 130px;
+                margin-bottom: 15px;
+            }
+            /* 50% a 100% (Siguientes 4 segundos): Se queda estático en rotación y se expande al ancho completo */
+            55% {
+                transform: rotate(360deg);
+                border-radius: 0%;
+                width: 100vw;
+                height: 250px;
+                margin-bottom: 25px;
+            }
+            90% {
+                transform: rotate(360deg);
+                border-radius: 0%;
+                width: 100vw;
+                height: 250px;
+                margin-bottom: 25px;
+            }
+            /* Regreso rápido al estado inicial para reiniciar el bucle limpio */
+            100% {
+                transform: rotate(360deg);
+                border-radius: 50%;
+                width: 130px;
+                height: 130px;
+                margin-bottom: 15px;
+            }
         }
         
         header h1 { font-size: 32px; color: #a38752; letter-spacing: 6px; font-weight: 400; text-transform: uppercase; margin-bottom: 5px; }
@@ -54,15 +89,10 @@
         @keyframes entrance { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
         /* Tarjetas de Productos */
-        .product-card { background: #ffffff; border-radius: 12px; overflow: hidden; margin-bottom: 25px; border: 1px solid #ebd6cf; box-shadow: 0 4px 15px rgba(191, 163, 111, 0.04); transition: transform 0.4s ease; cursor: pointer; position: relative; }
-        .product-image { width: 100%; height: 320px; background-color: #f5e6e1; background-size: cover; background-position: center; border-bottom: 1px solid #f5e6e1; }
+        .product-card { background: #ffffff; border-radius: 12px; overflow: hidden; margin-bottom: 25px; border: 1px solid #ebd6cf; box-shadow: 0 4px 15px rgba(191, 163, 111, 0.04); transition: transform 0.4s ease; cursor: pointer; }
+        .product-image { width: 100%; height: 320px; background-color: #fcf6f4; background-size: cover; background-position: center; border-bottom: 1px solid #f5e6e1; }
         
-        /* Etiqueta de Agotado */
-        .badge-out { position: absolute; top: 15px; right: 15px; background-color: #d9534f; color: white; padding: 5px 12px; border-radius: 15px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; z-index: 2; }
-        .product-card.stock-out { opacity: 0.7; }
-        .product-card.stock-out .btn-add { border-color: #d9534f; color: #d9534f; }
-        
-        .product-info { padding: 20px; background: white; position: relative; z-index: 3; }
+        .product-info { padding: 20px; }
         .product-title { font-size: 18px; font-weight: 500; color: #4a3f38; margin-bottom: 6px; letter-spacing: 0.5px; }
         .product-desc { font-size: 13px; color: #8a7e76; margin-bottom: 15px; line-height: 1.4; }
         .product-meta { display: flex; justify-content: space-between; align-items: center; }
@@ -73,9 +103,8 @@
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.98); z-index: 1000; overflow-y: auto; padding: 20px; }
         .modal-content { max-width: 400px; margin: 20px auto; }
         .close-btn { font-size: 30px; cursor: pointer; color: #bfa36f; float: right; }
-        .modal-img-container { width: 100%; height: 350px; background-color: #f5e6e1; background-size: cover; background-position: center; border-radius: 12px; margin-bottom: 20px; border: 1px solid #ebd6cf; }
+        .modal-img-container { width: 100%; height: 350px; background-size: cover; background-position: center; border-radius: 12px; margin-bottom: 20px; border: 1px solid #ebd6cf; }
         .btn-add-lg { width: 100%; background-color: #bfa36f; color: white; border: none; padding: 15px; border-radius: 25px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px; }
-        .btn-add-lg.disabled { background-color: #ebd6cf; color: #8a7e76; cursor: not-allowed; }
 
         /* Barra de Carrito */
         .cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background-color: #ffffff; border-top: 1px solid #ebd6cf; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; z-index: 100; box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.03); }
@@ -91,8 +120,7 @@
 </head>
 <body>
     <header>
-        <!-- Logo temporal de internet para asegurar carga inmediata -->
-        <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=300&q=80" alt="Logo Carlota">
+        <img src="Screenshot_20260529_095249_Instagram.jpg" alt="Logo Carlota">
         <h1>CARLOTA</h1>
         <p>Everyday Jewelry</p>
     </header>
@@ -107,6 +135,7 @@
         <button class="category-btn" onclick="switchCategory('novedades', 4)">Novedades</button>
     </div>
 
+    <!-- Contenedor principal de secciones -->
     <div class="container" id="swipe-container">
         <div id="cat-caravanas" class="products-section active"></div>
         <div id="cat-colgantes" class="products-section"></div>
@@ -126,7 +155,7 @@
         </div>
     </div>
 
-    <!-- Barra inferior -->
+    <!-- Barra inferior fija -->
     <div class="cart-bar">
         <div class="cart-summary">
             <span class="cart-count" id="cart-count">0 artículos</span>
@@ -142,43 +171,116 @@
         let cart = [];
         let lastSelectedProduct = null;
 
-        // Base de datos optimizada con 10 productos reales por categoría usando imágenes estables de Unsplash
-        const catalogData = {
+        const backupCatalogData = {
             caravanas: [
-                { id: "c1", name: "Aros Claribel", desc: "Acero quirúrgico, acabado plata", longDesc: "Esta sofisticada pieza está fabricada en acero quirúrgico de alta calidad con un brillante acabado en color plata. Su diseño moderno y minimalista la convierte en el complemento ideal para cualquier look.", price: 810, img: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=500&q=80", outOfStock: true },
-                { id: "c2", name: "Aros Eloísa", desc: "Acero quirúrgico con baño de oro", longDesc: "Los Aros Eloísa combinan una argolla dorada pequeña con un colgante redondo texturizado tipo medalla. Hipoalergénicos y perfectos para uso diario.", price: 850, img: "https://images.unsplash.com/photo-1635767798638-3e25273a8236?auto=format&fit=crop&w=500&q=80" },
-                { id: "c3", name: "Aros Fiorella", desc: "Acero quirúrgico con baño de oro", longDesc: "Celebración del diseño floral con un enfoque moderno. Livianos, resistentes al agua y no cambian de color.", price: 750, img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=500&q=80" },
-                { id: "c4", name: "Aros Florencia Oro", desc: "Acero quirúrgico, baño de oro 18k", longDesc: "Combinan la elegancia natural con un toque de lujo duradero y un brillo excepcional para destacar tu rostro.", price: 850, img: "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?auto=format&fit=crop&w=500&q=80" },
-                { id: "c5", name: "Aros Florencia Plata", desc: "Acero quirúrgico premium", longDesc: "Delicada silueta de inspiración botánica con acabado plata pulida que aporta frescura y distinción sutil.", price: 750, img: "https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?auto=format&fit=crop&w=500&q=80" },
-                { id: "c6", name: "Aros Geométricos Mini", desc: "Estilo minimalista moderno", longDesc: "Pequeñas formas puras pulidas a espejo. Ideales para usar solos o crear combinaciones en múltiples piercings.", price: 450, img: "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&w=500&q=80" },
-                { id: "c7", name: "Aros Gota", desc: "Líneas orgánicas y fluidas", longDesc: "Pendientes con silueta de gota de agua estilizada. Una pieza contemporánea con un reflejo limpio y pulido.", price: 690, img: "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=500&q=80" },
-                { id: "c8", name: "Aros Mabel", desc: "Volumen clásico sofisticado", longDesc: "Aros con presencia y diseño atemporal. Una adición perfecta para eventos especiales o jornadas de trabajo.", price: 820, img: "https://images.unsplash.com/photo-1543294001-f7cbfe92237e?auto=format&fit=crop&w=500&q=80" },
-                { id: "c9", name: "Aros Malva", desc: "Detalles sutiles y delicados", longDesc: "Argollas ligeras con acabados tersos muy cómodas para llevar puestas durante todo el día sin sobrecargar.", price: 640, img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=500&q=80" },
-                { id: "c10", name: "Aros Mini Oro", desc: "Esenciales minimalistas", longDesc: "El básico definitivo que combina con todo. Pequeños puntos de luz dorados, discretos y altamente resistentes.", price: 390, img: "https://images.unsplash.com/photo-1598560917505-59a3ad559071?auto=format&fit=crop&w=500&q=80" }
+                { id: "ca1", name: "Aros de Argolla Dorados", desc: "Baño en oro de 18k", longDesc: "Argollas clásicas y minimalistas con un acabado brillante perfecto para el uso diario. Ligeras y combinables con cualquier look.", price: 350, img: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&auto=format&fit=crop&q=80" },
+                { id: "ca2", name: "Caravanas con Perla Natural", desc: "Perno de plata con baño dorado", longDesc: "Elegancia natural. Una perla delicada suspendida de una base dorada sutil, ideales para ocasiones especiales o aportar distinción a tu día.", price: 420, img: "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=600&auto=format&fit=crop&q=80" }
             ],
             colgantes: [
-                { id: "co1", name: "Colgante Medalla Solar", desc: "Cadena fina con relieve", longDesc: "Un collar radiante que destaca por su medalla texturizada con destellos grabados. Baño de oro premium.", price: 1250, img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=500&q=80" },
-                { id: "co2", name: "Gargantilla Esmeralda", desc: "Circonia central facetada", longDesc: "Una cadena delicada coronada por una piedra verde oliva que añade una nota de color sofisticada a tu cuello.", price: 1420, img: "https://images.unsplash.com/photo-1611085583191-a3b1a1a27d81?auto=format&fit=crop&w=500&q=80" },
-                { id: "co3", name: "Collar Luna Creciente", desc: "Silueta calada minimalista", longDesc: "Un amuleto delicado que simboliza nuevos comienzos, finamente acabado en acero hipoalergénico brillante.", price: 1100, img: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=500&q=80" },
-                { id: "co4", name: "Gargantilla Perla Barroca", desc: "Perla natural de cultivo", longDesc: "Cada pieza presenta una forma única e irregular, suspendida de una refinada cadena con baño de oro de 18k.", price: 1590, img: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=500&q=80" },
-                { id: "co5", name: "Colgante Eslabones Lisos", desc: "Cadena estilo alternado", longDesc: "Diseño audaz de tendencia urbana ideal para vestir en capas o destacar como pieza central sobre prendas lisas.", price: 1350, img: "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?auto=format&fit=crop&w=500&q=80" },
-                { id: "co6", name: "Cadena Veneciana Oro", desc: "Tejido cerrado clásico", longDesc: "Estructura cúbica pulida de alta resistencia que ofrece un reflejo continuo y refinado en toda su extensión.", price: 990, img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=500&q=80" },
-                { id: "co7", name: "Colgante Inicial Personal", desc: "Tipografía clásica elegante", longDesc: "Medalla pulida a espejo grabada en relieve. El regalo perfecto con un significado íntimo y personalizado.", price: 1150, img: "https://images.unsplash.com/photo-1611085583191-a3b1a1a27d81?auto=format&fit=crop&w=500&q=80" },
-                { id: "co8", name: "Collar Doble Cadena", desc: "Efecto dos niveles armado", longDesc: "Combina una cadena fina superior con un nivel inferior texturizado, solucionando tu look en un solo broche.", price: 1680, img: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=500&q=80" },
-                { id: "co9", name: "Colgante Prisma Cuarzo", desc: "Piedra natural facetada", longDesc: "Prisma de cuarzo transparente engarzado en una base ligera, aportando brillo y energía natural a tu vestuario.", price: 1450, img: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=500&q=80" },
-                { id: "co10", name: "Gargantilla Puntos Oro", desc: "Esferas espaciadas delicadas", longDesc: "Cadena ultraligera con cuentas esféricas pulidas distribuidas de manera simétrica para capturar sutilmente la luz.", price: 1190, img: "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?auto=format&fit=crop&w=500&q=80" }
+                { id: "co1", name: "Colgante Medalla Solar", desc: "Cadena fina regulable", longDesc: "Un dije grabado con un diseño místico de sol. Realizado con materiales hipoalergénicos de alta calidad, ideal para llevar solo o en capas.", price: 590, img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&auto=format&fit=crop&q=80" },
+                { id: "co2", name: "Gargantilla Eslabón Fino", desc: "Longitud: 45 cm", longDesc: "Gargantilla de eslabones pulidos que capturan la luz de manera espectacular. Un accesorio moderno y atemporal.", price: 480, img: "https://images.unsplash.com/photo-1611085583191-a3b1a1a27d81?w=600&auto=format&fit=crop&q=80" }
             ],
             anillos: [
-                { id: "a1", name: "Anillo Trenzado", desc: "Diseño entrelazado ajustable", longDesc: "Una alianza moderna que simula una delicada trenza de metal pulido. Perfecto para llevar solo o combinado.", price: 890, img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=500&q=80" },
-                { id: "a2", name: "Anillo Sello Mini", desc: "Superficie lisa pulida", longDesc: "Reinterpretación minimalista del clásico anillo de sello, ideal para looks modernos y geométricos.", price: 950, img: "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=500&q=80" },
-                { id: "a3", name: "Anillo Alianza Circonias", desc: "Fila de cristales continuos", longDesc: "Engarce carril de circonias cúbicas que resplandecen desde cualquier ángulo. Un toque de lujo sutil.", price: 1250, img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=500&q=80" },
-                { id: "a4", name: "Anillo Doble Línea", desc: "Diseño abierto ajustable", longDesc: "Dos bandas paralelas que se fusionan en la base trasera, creando una ilusión visual moderna y vanguardista.", price: 890, img: "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=500&q=80" },
-                { id: "a5", name: "Anillo Ondas Libres", desc: "Silueta curva orgánica", longDesc: "Líneas sinuosas que envuelven el dedo de manera anatómica y delicada, ofreciendo comodidad absoluta.", price: 790, img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=500&q=80" },
-                { id: "a6", name: "Anillo Solitario Classic", desc: "Circonia corte brillante", longDesc: "El diseño de compromiso tradicional reinterpretado en acero quirúrgico premium para máxima resistencia y brillo.", price: 1100, img: "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=500&q=80" },
-                { id: "a7", name: "Anillo Eslabón Cadena", desc: "Estructura esculpida rígida", longDesc: "Simula el tramado de una cadena clásica con un pulido espejo impecable. Robusto pero sumamente cómodo.", price: 920, img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=500&q=80" },
-                { id: "a8", name: "Anillo Textura Martillada", desc: "Acabado facetado rústico", longDesc: "Superficie irregular labrada a mano que genera reflejos únicos y dinámicos según el movimiento de tu mano.", price: 850, img: "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=500&q=80" },
-                { id: "a9", name: "Anillo Cruzado Slim", desc: "Bandas finas superpuestas", longDesc: "Dos hilos metálicos delgados que se cruzan elegantemente en el frente. Estiliza visualmente la mano.", price: 720, img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=500&q=80" },
-                { id: "a10", name: "Anillo Corona Corona", desc: "Detalles calados finos", longDesc: "Silueta inspirada en la joyería clásica europea con un patrón geométrico repetitivo de alta definición.", price: 1050, img: "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=500&q=80" }
+                { id: "an1", name: "Anillo Trenzado Ajustable", desc: "Talle único adaptable", longDesc: "Diseño texturizado en forma de trenza que se adapta perfectamente a la medida de tu dedo. Cómodo, elegante y versátil.", price: 290, img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600&auto=format&fit=crop&q=80" },
+                { id: "an2", name: "Anillo Sello Minimalista", desc: "Superficie lisa pulida", longDesc: "El clásico anillo de sello reinterpretado con líneas finas y delicadas para la mujer de hoy. Un acento sofisticado para tus manos.", price: 320, img: "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=600&auto=format&fit=crop&q=80" }
             ],
             ofertas: [
-                { id: "o1", name: "Set Everyday Oro", desc: "Dúo esencial de aros y cadena", longDesc: "Llévate juntos dos de nuestros mejores básicos combinados a un precio único por tiempo limitado.", price: 1690, img: "https://images.unsplash.com/photo-1535632066927-ab7c
+                { id: "of1", name: "Set de Anillos Apilables", desc: "Promoción - 3 unidades", longDesc: "Tres diseños texturizados diferentes para usar juntos o separados. Aprovecha este precio especial de temporada.", price: 450, img: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&auto=format&fit=crop&q=80" }
+            ],
+            novedades: [
+                { id: "no1", name: "Brazalete Rígido Orgánico", desc: "Nueva Colección", longDesc: "Inspirado en las texturas de la naturaleza, este brazalete abierto es la pieza de declaración que le falta a tu colección de temporada.", price: 750, img: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&auto=format&fit=crop&q=80" }
+            ]
+        };
+
+        function renderCatalog() {
+            categories.forEach(cat => {
+                const container = document.getElementById(`cat-${cat}`);
+                if (!container) return;
+                container.innerHTML = backupCatalogData[cat].map((p, idx) => `
+                    <div class="product-card" onclick="openModal('${cat}', ${idx})">
+                        <div class="product-image" style="background-image: url('${p.img}');"></div>
+                        <div class="product-info">
+                            <div class="product-title">${p.name}</div>
+                            <div class="product-desc">${p.desc}</div>
+                            <div class="product-meta">
+                                <div class="product-price">$ ${p.price}</div>
+                                <button class="btn-add">Ver Detalle</button>
+                            </div>
+                        </div>
+                    </div>`).join('');
+            });
+        }
+
+        function switchCategory(catName, index) {
+            document.querySelectorAll('.products-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.category-btn').forEach(el => el.classList.remove('active'));
+            
+            const targetSection = document.getElementById(`cat-${catName}`);
+            if (targetSection) targetSection.classList.add('active');
+            
+            const btns = document.querySelectorAll('.category-btn');
+            if(btns[index]) btns[index].classList.add('active');
+            currentCatIndex = index;
+        }
+
+        function openModal(cat, index) {
+            const p = backupCatalogData[cat][index];
+            lastSelectedProduct = { name: p.name, price: p.price };
+            document.getElementById('modal-image').style.backgroundImage = `url('${p.img}')`;
+            document.getElementById('modal-title').innerText = p.name;
+            document.getElementById('modal-desc').innerText = p.longDesc;
+            document.getElementById('product-modal').style.display = 'block';
+        }
+
+        function closeModal() { document.getElementById('product-modal').style.display = 'none'; }
+
+        function addToCartFromModal() {
+            if (lastSelectedProduct) {
+                addToCart(lastSelectedProduct.name, lastSelectedProduct.price);
+                closeModal();
+            }
+        }
+
+        // Navegación táctil intuitiva
+        let touchStartX = 0;
+        document.getElementById('swipe-container').addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
+        document.getElementById('swipe-container').addEventListener('touchend', e => {
+            let diff = touchStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 60) {
+                if (diff > 0 && currentCatIndex < categories.length - 1) switchCategory(categories[++currentCatIndex], currentCatIndex);
+                else if (diff < 0 && currentCatIndex > 0) switchCategory(categories[--currentCatIndex], currentCatIndex);
+            }
+        });
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCartUI();
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 1200);
+        }
+
+        function updateCartUI() {
+            const wsLink = document.getElementById('whatsapp-link');
+            document.getElementById('cart-count').innerText = `${cart.length} ${cart.length === 1 ? 'artículo' : 'artículos'}`;
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            document.getElementById('cart-total').innerText = `Total: $${total}`;
+            if (cart.length > 0) wsLink.classList.remove('disabled'); else wsLink.classList.add('disabled');
+        }
+
+        function sendOrder(e) {
+            if (cart.length === 0) { e.preventDefault(); return; }
+            let itemCounts = {};
+            cart.forEach(item => itemCounts[item.name] = (itemCounts[item.name] || 0) + 1);
+            let total = cart.reduce((sum, item) => sum + item.price, 0);
+            let text = "*¡Hola CARLOTA! Me gustaría consultar disponibilidad por el siguiente pedido:*\n\n";
+            for (const [name, qty] of Object.entries(itemCounts)) text += `• *${qty}x* ${name}\n`;
+            text += `\nTotal estimado: *$${total}*\n\n_Catálogo Online Carlota Jewelry._`;
+            document.getElementById('whatsapp-link').href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(text)}`;
+        }
+
+        // Forzar renderizado inmediato al procesar el archivo HTML
+        renderCatalog();
+    </script>
+</body>
+</html>
