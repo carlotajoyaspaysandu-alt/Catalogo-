@@ -85,14 +85,14 @@
         
         /* Tarjetas de Productos */
         .product-card { background: #ffffff; border-radius: 12px; overflow: hidden; margin-bottom: 25px; border: 1px solid #ebd6cf; box-shadow: 0 4px 15px rgba(191, 163, 111, 0.04); transition: transform 0.4s ease; cursor: pointer; position: relative; }
-        .product-image { width: 100%; height: 320px; background-color: #fcf6f4; background-size: cover; background-position: center; border-bottom: 1px solid #f5e6e1; }
+        .product-image { width: 100%; height: 320px; background-color: #f5e6e1; background-size: cover; background-position: center; border-bottom: 1px solid #f5e6e1; display: flex; align-items: center; justify-content: center; color: #bfa36f; font-size: 14px; text-align: center; padding: 10px; }
         
         /* Etiqueta de Agotado */
-        .badge-out { position: absolute; top: 15px; right: 15px; background-color: #d9534f; color: white; padding: 5px 12px; border-radius: 15px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+        .badge-out { position: absolute; top: 15px; right: 15px; background-color: #d9534f; color: white; padding: 5px 12px; border-radius: 15px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; z-index: 2; }
         .product-card.stock-out { opacity: 0.7; }
         .product-card.stock-out .btn-add { border-color: #d9534f; color: #d9534f; }
         
-        .product-info { padding: 20px; }
+        .product-info { padding: 20px; background: white; }
         .product-title { font-size: 18px; font-weight: 500; color: #4a3f38; margin-bottom: 6px; letter-spacing: 0.5px; }
         .product-desc { font-size: 13px; color: #8a7e76; margin-bottom: 15px; line-height: 1.4; }
         .product-meta { display: flex; justify-content: space-between; align-items: center; }
@@ -103,7 +103,7 @@
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.98); z-index: 1000; overflow-y: auto; padding: 20px; }
         .modal-content { max-width: 400px; margin: 20px auto; }
         .close-btn { font-size: 30px; cursor: pointer; color: #bfa36f; float: right; }
-        .modal-img-container { width: 100%; height: 350px; background-size: cover; background-position: center; border-radius: 12px; margin-bottom: 20px; border: 1px solid #ebd6cf; }
+        .modal-img-container { width: 100%; height: 350px; background-color: #f5e6e1; background-size: cover; background-position: center; border-radius: 12px; margin-bottom: 20px; border: 1px solid #ebd6cf; display: flex; align-items: center; justify-content: center; color: #bfa36f; }
         .btn-add-lg { width: 100%; background-color: #bfa36f; color: white; border: none; padding: 15px; border-radius: 25px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px; }
         .btn-add-lg.disabled { background-color: #ebd6cf; color: #8a7e76; cursor: not-allowed; }
 
@@ -121,7 +121,7 @@
 </head>
 <body>
     <header>
-        <img src="Screenshot_20260529_095249_Instagram.jpg" alt="Logo Carlota">
+        <img src="Screenshot_20260529_095249_Instagram.jpg" alt="Logo Carlota" onerror="this.style.display='none'">
         <h1>CARLOTA</h1>
         <p>Everyday Jewelry</p>
     </header>
@@ -171,7 +171,7 @@
         let cart = [];
         let lastSelectedProduct = null;
 
-        // Base de datos real alimentada con tus archivos y tu documento de Word
+        // Base de datos real basada en tu documento de Word
         const backupCatalogData = {
             caravanas: [
                 { id: "c1", name: "Aros Claribel", desc: "Acero quirúrgico, acabado plata", longDesc: "Esta sofisticada pieza está fabricada en acero quirúrgico de alta calidad con un brillante acabado en color plata. Su diseño moderno y minimalista la convierte en el complemento ideal para cualquier look, ya sea casual o elegante.", price: 810, img: "Aros Claribel.jpg", outOfStock: true },
@@ -184,12 +184,6 @@
                 { id: "c8", name: "Aros Mabel", desc: "Acero quirúrgico con baño de oro", longDesc: "Diseñados para elevar un look casual o acompañar un outfit más elegante con un toque vibrante. Son livianos, hipoalargénicos y resistentes al agua, ideales para usarlos todos los días sin perder el brillo.", price: 890, img: "Aros Mabel.png" },
                 { id: "c9", name: "Aros Malva", desc: "Acero quirúrgico color plata", longDesc: "Los Aros Malva son una declaración de estilo. Con un diseño orgánico y moderno, su forma elegante y volumen sutil aportan un toque sofisticado a cualquier look, lo que los hace perfectos para el uso diario.", price: 690, img: "Aros Malva.jpg" },
                 { id: "c10", name: "Aros Mini Oro", desc: "Acero quirúrgico sutil", longDesc: "Son ideales para armar tu mix & match perfecto en varias perforaciones, o usarlos solos para un look sutil y elegante. Hipoalargénicos, resistentes y cómodos para usar todos los días.", price: 300, img: "Aros Mini Oro.jpg" }
-                
-                // Artículos del Word sin imagen en repositorio por el momento:
-                // { id: "cx1", name: "Aros Ernestina", desc: "Baño de oro y circonias", longDesc: "Joyas delicadas con diseño de argolla decorada con circonias y detalles en forma de rayos dorados.", price: 790, img: "placeholder.jpg" },
-                // { id: "cx2", name: "Aros Mini Rosa", desc: "Acero quirúrgico oro rosa", longDesc: "Aros geométricos minis color oro rosa. Livianos, resistentes e hipoalargénicos.", price: 270, img: "placeholder.jpg" },
-                // { id: "cx3", name: "Aros Renata", desc: "Diseño protagonista con presencia", longDesc: "Un diseño protagonista que transforma cualquier look en segundos, aportando personalidad y estilo moderno.", price: 820, img: "placeholder.jpg" },
-                // { id: "cx4", name: "Aros Zana Rojos", desc: "Baño de oro y piedras rojas", longDesc: "Combinan el brillo del acero quirúrgico con baño de oro con el contraste profundo de pequeñas piedras rojas engarzadas en el frente.", price: 790, img: "placeholder.jpg" }
             ],
             colgantes: [],
             anillos: [],
@@ -207,10 +201,14 @@
                     return;
                 }
 
-                container.innerHTML = backupCatalogData[cat].map((p, idx) => `
+                container.innerHTML = backupCatalogData[cat].map((p, idx) => {
+                    // Si la imagen falla en cargar localmente, se aplica un estilo alternativo elegante con texto.
+                    return `
                     <div class="product-card ${p.outOfStock ? 'stock-out' : ''}" onclick="openModal('${cat}', ${idx})">
                         ${p.outOfStock ? '<span class="badge-out">Agotado</span>' : ''}
-                        <div class="product-image" style="background-image: url('${p.img}');"></div>
+                        <div class="product-image" style="background-image: url('${encodeURIComponent(p.img)}');" data-img="${p.img}">
+                            <span class="alt-text" style="display:none;">${p.name}</span>
+                        </div>
                         <div class="product-info">
                             <div class="product-title">${p.name}</div>
                             <div class="product-desc">${p.desc}</div>
@@ -219,7 +217,19 @@
                                 <button class="btn-add">${p.outOfStock ? 'Ver Info' : 'Ver Detalle'}</button>
                             </div>
                         </div>
-                    </div>`).join('');
+                    </div>`;
+                }).join('');
+            });
+
+            // Verificar si las imágenes existen localmente; si fallan, asegurar que la interfaz se mantenga limpia
+            document.querySelectorAll('.product-image').forEach(div => {
+                const bgUrl = div.style.backgroundImage.slice(5, -2);
+                const img = new Image();
+                img.src = bgUrl;
+                img.onerror = () => {
+                    div.style.backgroundImage = 'none';
+                    div.querySelector('.alt-text').style.display = 'block';
+                };
             });
         }
 
@@ -239,7 +249,17 @@
             const p = backupCatalogData[cat][index];
             lastSelectedProduct = p;
             
-            document.getElementById('modal-image').style.backgroundImage = `url('${p.img}')`;
+            const modalImg = document.getElementById('modal-image');
+            modalImg.style.backgroundImage = `url('${encodeURIComponent(p.img)}')`;
+            modalImg.innerHTML = `<span class="alt-text" style="display:none;">${p.name}</span>`;
+            
+            const testImg = new Image();
+            testImg.src = p.img;
+            testImg.onerror = () => {
+                modalImg.style.backgroundImage = 'none';
+                modalImg.querySelector('.alt-text').style.display = 'block';
+            };
+
             document.getElementById('modal-title').innerText = p.name;
             document.getElementById('modal-desc').innerText = p.longDesc;
             
@@ -290,12 +310,4 @@
             const total = cart.reduce((sum, item) => sum + item.price, 0);
             document.getElementById('cart-total').innerText = `Total: $${total}`;
             if (cart.length > 0) wsLink.classList.remove('disabled'); else wsLink.classList.add('disabled');
-        }
-
-        function sendOrder(e) {
-            if (cart.length === 0) { e.preventDefault(); return; }
-            let itemCounts = {};
-            cart.forEach(item => itemCounts[item.name] = (itemCounts[item.name] || 0) + 1);
-            let total = cart.reduce((sum, item) => sum + item.price, 0);
-            let text = "*¡Hola CARLOTA! Me gustaría consultar disponibilidad por el siguiente pedido:*\n\n";
-            for (const [name, qty] of Object.entries(itemCounts)
+        
