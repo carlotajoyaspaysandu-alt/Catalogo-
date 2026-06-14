@@ -55,14 +55,14 @@
         
         /* Tarjetas de Productos */
         .product-card { background: #ffffff; border-radius: 12px; overflow: hidden; margin-bottom: 25px; border: 1px solid #ebd6cf; box-shadow: 0 4px 15px rgba(191, 163, 111, 0.04); transition: transform 0.4s ease; cursor: pointer; position: relative; }
-        .product-image { width: 100%; height: 320px; background-color: #f5e6e1; background-size: cover; background-position: center; border-bottom: 1px solid #f5e6e1; }
+        .product-image { width: 100%; height: 320px; background-color: #f5e6e1; background-size: cover; background-position: center; border-bottom: 1px solid #f5e6e1; display: flex; align-items: center; justify-content: center; text-align: center; color: #bfa36f; font-size: 13px; font-weight: 500; padding: 15px; }
         
         /* Etiqueta de Agotado */
         .badge-out { position: absolute; top: 15px; right: 15px; background-color: #d9534f; color: white; padding: 5px 12px; border-radius: 15px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; z-index: 2; }
         .product-card.stock-out { opacity: 0.7; }
         .product-card.stock-out .btn-add { border-color: #d9534f; color: #d9534f; }
         
-        .product-info { padding: 20px; background: white; }
+        .product-info { padding: 20px; background: white; position: relative; z-index: 3; }
         .product-title { font-size: 18px; font-weight: 500; color: #4a3f38; margin-bottom: 6px; letter-spacing: 0.5px; }
         .product-desc { font-size: 13px; color: #8a7e76; margin-bottom: 15px; line-height: 1.4; }
         .product-meta { display: flex; justify-content: space-between; align-items: center; }
@@ -73,7 +73,7 @@
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.98); z-index: 1000; overflow-y: auto; padding: 20px; }
         .modal-content { max-width: 400px; margin: 20px auto; }
         .close-btn { font-size: 30px; cursor: pointer; color: #bfa36f; float: right; }
-        .modal-img-container { width: 100%; height: 350px; background-color: #f5e6e1; background-size: cover; background-position: center; border-radius: 12px; margin-bottom: 20px; border: 1px solid #ebd6cf; }
+        .modal-img-container { width: 100%; height: 350px; background-color: #f5e6e1; background-size: cover; background-position: center; border-radius: 12px; margin-bottom: 20px; border: 1px solid #ebd6cf; display: flex; align-items: center; justify-content: center; color: #bfa36f; font-weight: 500; }
         .btn-add-lg { width: 100%; background-color: #bfa36f; color: white; border: none; padding: 15px; border-radius: 25px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px; }
         .btn-add-lg.disabled { background-color: #ebd6cf; color: #8a7e76; cursor: not-allowed; }
 
@@ -114,7 +114,6 @@
         <div id="cat-novedades" class="products-section"></div>
     </div>
 
-    <!-- Modal de Detalles -->
     <div id="product-modal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -125,7 +124,6 @@
         </div>
     </div>
 
-    <!-- Barra inferior -->
     <div class="cart-bar">
         <div class="cart-summary">
             <span class="cart-count" id="cart-count">0 artículos</span>
@@ -181,10 +179,15 @@
                     return;
                 }
 
-                container.innerHTML = catalogData[cat].map((p, idx) => `
+                container.innerHTML = catalogData[cat].map((p, idx) => {
+                    // El encodeURI asegura que los nombres con espacios se conviertan de forma segura para la web
+                    const safeImgUrl = encodeURI(p.img);
+                    return `
                     <div class="product-card ${p.outOfStock ? 'stock-out' : ''}" onclick="openModal('${cat}', ${idx})">
                         ${p.outOfStock ? '<span class="badge-out">Agotado</span>' : ''}
-                        <div class="product-image" style="background-image: url('${p.img}');"></div>
+                        <div class="product-image" style="background-image: url('${safeImgUrl}');">
+                            ${!p.img.startsWith('http') ? `<span>${p.name}</span>` : ''}
+                        </div>
                         <div class="product-info">
                             <div class="product-title">${p.name}</div>
                             <div class="product-desc">${p.desc}</div>
@@ -193,7 +196,8 @@
                                 <button class="btn-add">${p.outOfStock ? 'Ver Info' : 'Ver Detalle'}</button>
                             </div>
                         </div>
-                    </div>`).join('');
+                    </div>`;
+                }).join('');
             });
         }
 
@@ -213,7 +217,10 @@
             const p = catalogData[cat][index];
             lastSelectedProduct = p;
             
-            document.getElementById('modal-image').style.backgroundImage = `url('${p.img}')`;
+            const modalImageContainer = document.getElementById('modal-image');
+            modalImageContainer.style.backgroundImage = `url('${encodeURI(p.img)}')`;
+            modalImageContainer.innerHTML = !p.img.startsWith('http') ? `<span>${p.name}</span>` : '';
+
             document.getElementById('modal-title').innerText = p.name;
             document.getElementById('modal-desc').innerText = p.longDesc;
             
@@ -240,7 +247,7 @@
             }
         }
 
-        // Navegación fluida por deslizamiento (Swipe)
+        // Navegación táctil fluida
         let touchStartX = 0;
         const swipeContainer = document.getElementById('swipe-container');
         if (swipeContainer) {
@@ -263,17 +270,4 @@
             cart.push({ name, price });
             updateCartUI();
             const toast = document.getElementById('toast');
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 1200);
-        }
-
-        function updateCartUI() {
-            const wsLink = document.getElementById('whatsapp-link');
-            document.getElementById('cart-count').innerText = `${cart.length} ${cart.length === 1 ? 'artículo' : 'artículos'}`;
-            const total = cart.reduce((sum, item) => sum + item.price, 0);
-            document.getElementById('cart-total').innerText = `Total: $${total}`;
-            if (cart.length > 0) wsLink.classList.remove('disabled'); else wsLink.classList.add('disabled');
-        }
-
-        function sendOrder(e) {
-            if (cart.length === 0) { e.preventDefault(); return; }
+            toa
