@@ -141,27 +141,27 @@
         let cart = [];
         let lastSelectedProduct = null;
 
-        // Base de datos integrada con tus datos de caravanas e imágenes web para las demás secciones
+        // Base de datos integrada con tus caravanas reales y fotos de internet para las demás secciones
         const catalogData = {
             caravanas: [
                 { id: "c1", name: "Aros Claribel", desc: "Acero quirúrgico, acabado plata", longDesc: "Esta sofisticada pieza está fabricada en acero quirúrgico de alta calidad con un brillante acabado en color plata. Su diseño moderno y minimalista la convierte en el complemento ideal para cualquier look, ya sea casual o elegante.", price: 810, img: "Aros Claribel.jpg", outOfStock: true },
                 { id: "c2", name: "Aros Eloísa", desc: "Acero quirúrgico con baño de oro", longDesc: "Los Aros Eloísa combinan una argolla dorada pequeña con un colgante redondo texturizado tipo medalla. Están fabricados en acero quirúrgico hipoalargénico con baño de oro, lo que los hace livianos, cómodos, resistentes al agua y perfectos para uso diario.", price: 850, img: "Aros Eloisa.jpg" },
                 { id: "c3", name: "Aros Fiorella", desc: "Acero quirúrgico con baño de oro", longDesc: "Los Aros Fiorella son una celebración del diseño floral con un enfoque moderno y artístico. Fabricados en acero quirúrgico hipoalargénico con baño de oro, son livianos, resistentes al agua y no cambian de color. Ideales para looks boho, románticos o como statement piece con básicos neutros.", price: 750, img: "Aros Fiorella.jpg" },
-                { id: "c4", name: "Aros Florencia Oro", desc: "Acero quirúrgico, baño de oro 18k", longDesc: "Los Aros Florencia con baño de oro combinan la elegancia natural con un toque de lujo. Fabricados en acero quirúrgico hipoalargénico y recubiertos con un baño de oro de 18k, estos aros ofrecen resistencia y un brillo duradero.", price: 850, img: "Aros Florencia Oro.jpg" },
-                { id: "c5", name: "Aros Florencia", desc: "Acero quirúrgico", longDesc: "Delicados aros con diseño de inspiración botánica perfectos para realzar tu estilo diario con sutileza y elegancia natural.", price: 750, img: "Aros Florencia.jpg" },
-                { id: "c6", name: "Aros Geométricos Mini", desc: "Líneas minimalistas", longDesc: "Pequeñas piezas geométricas que aportan un aire moderno, sobrio e ideal para combinar en múltiples perforaciones.", price: 420, img: "Aros Geométricos Mini.jpg" },
-                { id: "c7", name: "Aros Gota", desc: "Diseño fluido y orgánico", longDesc: "Pendientes en forma de gota con un acabado pulido impecable que atrapa la luz a cada movimiento. Un clásico contemporáneo.", price: 680, img: "Aros Gota.jpg" },
-                { id: "c8", name: "Aros Mabel", desc: "Silueta clásica y elegante", longDesc: "Aros de diseño atemporal ideales para añadir volumen y distinción sofisticada tanto a tus outfits casuales como formales.", price: 790, img: "Aros Mabel.png" },
-                { id: "c9", name: "Aros Malva", desc: "Estilo sutil y romántico", longDesc: "Argollas finas inspiradas en detalles naturales, ligeras y ultra cómodas para llevar contigo durante todo el día.", price: 620, img: "Aros Malva.jpg" },
-                { id: "c10", name: "Aros Mini Oro", desc: "Esenciales mini en baño de oro", longDesc: "La pieza básica que no puede faltar en tu joyero. Su tamaño minimalista es perfecto para un brillo discreto todos los días.", price: 390, img: "Aros Mini Oro.jpg" }
+                { id: "c4", name: "Aros Florencia Oro", desc: "Acero quirúrgico, baño de oro 18k", longDesc: "los Aros Florencia con baño de oro combinan la elegancia natural con un toque de lujo. Fabricados en acero quirúrgico hipoalargénico y recubiertos con un baño de oro de 18k, estos aros ofrecen resistencia y un brillo duradero.", price: 850, img: "Aros Florencia Oro.jpg" },
+                { id: "c5", name: "Aros Florencia", desc: "Acero quirúrgico premium", longDesc: "Delicada silueta de inspiración botánica que aporta frescura y elegancia sutil a tu rostro. Ideales para lucir a diario.", price: 750, img: "Aros Florencia.jpg" },
+                { id: "c6", name: "Aros Geométricos Mini", desc: "Estilo minimalista moderno", longDesc: "Pequeñas formas puras pulidas a espejo. Ideales para usar solos o crear combinaciones asimétricas si tienes múltiples piercings.", price: 450, img: "Aros Geométricos Mini.jpg" },
+                { id: "c7", name: "Aros Gota", desc: "Líneas orgánicas y fluidas", longDesc: "Pendientes con silueta de gota de agua estilizada. Una pieza contemporánea con un reflejo limpio que eleva cualquier outfit básico.", price: 690, img: "Aros Gota.jpg" },
+                { id: "c8", name: "Aros Mabel", desc: "Volumen clásico sofisticado", longDesc: "Aros con presencia y diseño atemporal. Una adición perfecta para eventos especiales o para marcar estilo en tus jornadas de trabajo.", price: 820, img: "Aros Mabel.png" },
+                { id: "c9", name: "Aros Malva", desc: "Detalles sutiles y delicados", longDesc: "Argollas ligeras con acabados tersos muy cómodas para llevar puestas durante todo el día sin sobrecargar tu look.", price: 640, img: "Aros Malva.jpg" },
+                { id: "c10", name: "Aros Mini Oro", desc: "Esenciales minimalistas", longDesc: "El básico definitivo que combina con todo. Pequeños puntos de luz dorados, discretos y altamente resistentes.", price: 390, img: "Aros Mini Oro.jpg" }
             ],
             colgantes: [
-                { id: "co1", name: "Colgante Medalla Solar", desc: "Cadena fina con medalla grabada", longDesc: "Un collar radiante que destaca por su medalla texturizada con destellos grabados. Baño de oro de alta resistencia.", price: 1250, img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=500&q=80" },
-                { id: "co2", name: "Gargantilla Esmeralda", desc: "Piedra central facetada", longDesc: "Una cadena delicada coronada por una circonia verde oliva que añade una nota de color sofisticada a tu cuello.", price: 1420, img: "https://images.unsplash.com/photo-1611085583191-a3b1a1a27d81?auto=format&fit=crop&w=500&q=80" }
+                { id: "co1", name: "Colgante Medalla Solar", desc: "Cadena fina con relieve", longDesc: "Un collar radiante que destaca por su medalla texturizada con destellos grabados. Baño de oro de alta resistencia.", price: 1250, img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=500&q=80" },
+                { id: "co2", name: "Gargantilla Esmeralda", desc: "Circonia central facetada", longDesc: "Una cadena delicada coronada por una piedra verde oliva que añade una nota de color sofisticada a tu cuello.", price: 1420, img: "https://images.unsplash.com/photo-1611085583191-a3b1a1a27d81?auto=format&fit=crop&w=500&q=80" }
             ],
             anillos: [
                 { id: "a1", name: "Anillo Trenzado", desc: "Diseño entrelazado ajustable", longDesc: "Una alianza moderna que simula una delicada trenza de metal pulido. Perfecto para llevar solo o combinado.", price: 890, img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=500&q=80" },
-                { id: "a2", name: "Anillo Sello Mini", desc: "Superficie lisa pulida", longDesc: "Reinterpretación minimalista del clásico anillo de sello, ideal para el dedo meñique o looks geométricos.", price: 950, img: "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=500&q=80" }
+                { id: "a2", name: "Anillo Sello Mini", desc: "Superficie lisa pulida", longDesc: "Reinterpretación minimalista del clásico anillo de sello, ideal para looks modernos y geométricos.", price: 950, img: "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=500&q=80" }
             ],
             ofertas: [
                 { id: "o1", name: "Set Everyday Oro", desc: "Dúo esencial de aros y cadena", longDesc: "Llévate juntos dos de nuestros mejores básicos combinados a un precio único por tiempo limitado.", price: 1690, img: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=500&q=80" }
@@ -176,7 +176,7 @@
                 const container = document.getElementById(`cat-${cat}`);
                 if (!container) return;
                 
-                if (catalogData[cat].length === 0) {
+                if (!catalogData[cat] || catalogData[cat].length === 0) {
                     container.innerHTML = `<p style="text-align:center; padding: 40px; color: #8a7e76; font-size: 14px;">Próximamente nuevas piezas en esta sección.</p>`;
                     return;
                 }
@@ -240,16 +240,24 @@
             }
         }
 
-        // Navegación táctil (Swipe) de categorías
+        // Navegación fluida por deslizamiento (Swipe)
         let touchStartX = 0;
-        document.getElementById('swipe-container').addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
-        document.getElementById('swipe-container').addEventListener('touchend', e => {
-            let diff = touchStartX - e.changedTouches[0].screenX;
-            if (Math.abs(diff) > 60) {
-                if (diff > 0 && currentCatIndex < categories.length - 1) switchCategory(categories[++currentCatIndex], currentCatIndex);
-                else if (diff < 0 && currentCatIndex > 0) switchCategory(categories[--currentCatIndex], currentCatIndex);
-            }
-        });
+        const swipeContainer = document.getElementById('swipe-container');
+        if (swipeContainer) {
+            swipeContainer.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX, {passive: true});
+            swipeContainer.addEventListener('touchend', e => {
+                let diff = touchStartX - e.changedTouches[0].screenX;
+                if (Math.abs(diff) > 60) {
+                    if (diff > 0 && currentCatIndex < categories.length - 1) {
+                        currentCatIndex++;
+                        switchCategory(categories[currentCatIndex], currentCatIndex);
+                    } else if (diff < 0 && currentCatIndex > 0) {
+                        currentCatIndex--;
+                        switchCategory(categories[currentCatIndex], currentCatIndex);
+                    }
+                }
+            }, {passive: true});
+        }
 
         function addToCart(name, price) {
             cart.push({ name, price });
@@ -269,8 +277,3 @@
 
         function sendOrder(e) {
             if (cart.length === 0) { e.preventDefault(); return; }
-            let itemCounts = {};
-            cart.forEach(item => itemCounts[item.name] = (itemCounts[item.name] || 0) + 1);
-            let total = cart.reduce((sum, item) => sum + item.price, 0);
-            let text = "*¡Hola CARLOTA! Me gustaría consultar disponibilidad por el siguiente pedido:*\n\n";
-            for (cons
