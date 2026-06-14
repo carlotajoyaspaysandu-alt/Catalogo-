@@ -8,7 +8,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
         body { background-color: #fcf6f4; color: #5a4f48; padding-bottom: 100px; }
         
-        /* Encabezado con animación secuencial (Giro 4s + Estático con Expansión 4s) */
+        /* Encabezado con animación secuencial */
         header { 
             background-color: #f5e6e1; 
             padding: 35px 15px; 
@@ -31,41 +31,11 @@
         }
 
         @keyframes secuenciaLogo {
-            0% {
-                transform: rotate(0deg);
-                border-radius: 50%;
-                width: 130px;
-                height: 130px;
-                margin-bottom: 15px;
-            }
-            50% {
-                transform: rotate(360deg);
-                border-radius: 50%;
-                width: 130px;
-                height: 130px;
-                margin-bottom: 15px;
-            }
-            55% {
-                transform: rotate(360deg);
-                border-radius: 0%;
-                width: 100vw;
-                height: 250px;
-                margin-bottom: 25px;
-            }
-            90% {
-                transform: rotate(360deg);
-                border-radius: 0%;
-                width: 100vw;
-                height: 250px;
-                margin-bottom: 25px;
-            }
-            100% {
-                transform: rotate(360deg);
-                border-radius: 50%;
-                width: 130px;
-                height: 130px;
-                margin-bottom: 15px;
-            }
+            0% { transform: rotate(0deg); border-radius: 50%; width: 130px; height: 130px; margin-bottom: 15px; }
+            50% { transform: rotate(360deg); border-radius: 50%; width: 130px; height: 130px; margin-bottom: 15px; }
+            55% { transform: rotate(360deg); border-radius: 0%; width: 100vw; height: 250px; margin-bottom: 25px; }
+            90% { transform: rotate(360deg); border-radius: 0%; width: 100vw; height: 250px; margin-bottom: 25px; }
+            100% { transform: rotate(360deg); border-radius: 50%; width: 130px; height: 130px; margin-bottom: 15px; }
         }
         
         header h1 { font-size: 32px; color: #a38752; letter-spacing: 6px; font-weight: 400; text-transform: uppercase; margin-bottom: 5px; }
@@ -85,7 +55,7 @@
         
         /* Tarjetas de Productos */
         .product-card { background: #ffffff; border-radius: 12px; overflow: hidden; margin-bottom: 25px; border: 1px solid #ebd6cf; box-shadow: 0 4px 15px rgba(191, 163, 111, 0.04); transition: transform 0.4s ease; cursor: pointer; position: relative; }
-        .product-image { width: 100%; height: 320px; background-color: #f5e6e1; background-size: cover; background-position: center; border-bottom: 1px solid #f5e6e1; display: flex; align-items: center; justify-content: center; color: #bfa36f; font-size: 14px; text-align: center; padding: 10px; }
+        .product-image { width: 100%; height: 320px; background-color: #f5e6e1; background-size: cover; background-position: center; border-bottom: 1px solid #f5e6e1; }
         
         /* Etiqueta de Agotado */
         .badge-out { position: absolute; top: 15px; right: 15px; background-color: #d9534f; color: white; padding: 5px 12px; border-radius: 15px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; z-index: 2; }
@@ -103,7 +73,7 @@
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.98); z-index: 1000; overflow-y: auto; padding: 20px; }
         .modal-content { max-width: 400px; margin: 20px auto; }
         .close-btn { font-size: 30px; cursor: pointer; color: #bfa36f; float: right; }
-        .modal-img-container { width: 100%; height: 350px; background-color: #f5e6e1; background-size: cover; background-position: center; border-radius: 12px; margin-bottom: 20px; border: 1px solid #ebd6cf; display: flex; align-items: center; justify-content: center; color: #bfa36f; }
+        .modal-img-container { width: 100%; height: 350px; background-color: #f5e6e1; background-size: cover; background-position: center; border-radius: 12px; margin-bottom: 20px; border: 1px solid #ebd6cf; }
         .btn-add-lg { width: 100%; background-color: #bfa36f; color: white; border: none; padding: 15px; border-radius: 25px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px; }
         .btn-add-lg.disabled { background-color: #ebd6cf; color: #8a7e76; cursor: not-allowed; }
 
@@ -121,7 +91,7 @@
 </head>
 <body>
     <header>
-        <img src="Screenshot_20260529_095249_Instagram.jpg" alt="Logo Carlota" onerror="this.style.display='none'">
+        <img src="Screenshot_20260529_095249_Instagram.jpg" alt="Logo Carlota">
         <h1>CARLOTA</h1>
         <p>Everyday Jewelry</p>
     </header>
@@ -171,24 +141,34 @@
         let cart = [];
         let lastSelectedProduct = null;
 
-        // Base de datos real basada en tu documento de Word
-        const backupCatalogData = {
+        // Base de datos integrada con tus datos de caravanas e imágenes web para las demás secciones
+        const catalogData = {
             caravanas: [
                 { id: "c1", name: "Aros Claribel", desc: "Acero quirúrgico, acabado plata", longDesc: "Esta sofisticada pieza está fabricada en acero quirúrgico de alta calidad con un brillante acabado en color plata. Su diseño moderno y minimalista la convierte en el complemento ideal para cualquier look, ya sea casual o elegante.", price: 810, img: "Aros Claribel.jpg", outOfStock: true },
                 { id: "c2", name: "Aros Eloísa", desc: "Acero quirúrgico con baño de oro", longDesc: "Los Aros Eloísa combinan una argolla dorada pequeña con un colgante redondo texturizado tipo medalla. Están fabricados en acero quirúrgico hipoalargénico con baño de oro, lo que los hace livianos, cómodos, resistentes al agua y perfectos para uso diario.", price: 850, img: "Aros Eloisa.jpg" },
                 { id: "c3", name: "Aros Fiorella", desc: "Acero quirúrgico con baño de oro", longDesc: "Los Aros Fiorella son una celebración del diseño floral con un enfoque moderno y artístico. Fabricados en acero quirúrgico hipoalargénico con baño de oro, son livianos, resistentes al agua y no cambian de color. Ideales para looks boho, románticos o como statement piece con básicos neutros.", price: 750, img: "Aros Fiorella.jpg" },
                 { id: "c4", name: "Aros Florencia Oro", desc: "Acero quirúrgico, baño de oro 18k", longDesc: "Los Aros Florencia con baño de oro combinan la elegancia natural con un toque de lujo. Fabricados en acero quirúrgico hipoalargénico y recubiertos con un baño de oro de 18k, estos aros ofrecen resistencia y un brillo duradero.", price: 850, img: "Aros Florencia Oro.jpg" },
-                { id: "c5", name: "Aros Florencia Plata", desc: "Acero quirúrgico de alta calidad", longDesc: "Una pieza atemporal y elegante. Su diseño en forma de hoja refleja la naturaleza, con un acabado pulido que aporta un brillo sofisticado y moderno. Ideales para uso diario o para ocasiones especiales, son hipoalargénicos, perfectos para pieles sensibles.", price: 750, img: "Aros Florencia.jpg" },
-                { id: "c6", name: "Aros Geométricos Mini", desc: "Acero quirúrgico minimalista", longDesc: "Aros geométricos minis en acero quirúrgico. Livianos, resistentes, duraderos e hipoalargénicos. Elegí entre todas las opciones disponibles.", price: 270, img: "Aros Geométricos Mini.jpg" },
-                { id: "c7", name: "Aros Gota", desc: "Acero quirúrgico, forma de gota", longDesc: "Minimalistas y sofisticadas, estas caravanas con forma de gota son el toque final para cualquier outfit. Fabricadas en acero quirúrgico, ofrecen brillo, durabilidad y comodidad durante todo el día.", price: 810, img: "Aros Gota.jpg" },
-                { id: "c8", name: "Aros Mabel", desc: "Acero quirúrgico con baño de oro", longDesc: "Diseñados para elevar un look casual o acompañar un outfit más elegante con un toque vibrante. Son livianos, hipoalargénicos y resistentes al agua, ideales para usarlos todos los días sin perder el brillo.", price: 890, img: "Aros Mabel.png" },
-                { id: "c9", name: "Aros Malva", desc: "Acero quirúrgico color plata", longDesc: "Los Aros Malva son una declaración de estilo. Con un diseño orgánico y moderno, su forma elegante y volumen sutil aportan un toque sofisticado a cualquier look, lo que los hace perfectos para el uso diario.", price: 690, img: "Aros Malva.jpg" },
-                { id: "c10", name: "Aros Mini Oro", desc: "Acero quirúrgico sutil", longDesc: "Son ideales para armar tu mix & match perfecto en varias perforaciones, o usarlos solos para un look sutil y elegante. Hipoalargénicos, resistentes y cómodos para usar todos los días.", price: 300, img: "Aros Mini Oro.jpg" }
+                { id: "c5", name: "Aros Florencia", desc: "Acero quirúrgico", longDesc: "Delicados aros con diseño de inspiración botánica perfectos para realzar tu estilo diario con sutileza y elegancia natural.", price: 750, img: "Aros Florencia.jpg" },
+                { id: "c6", name: "Aros Geométricos Mini", desc: "Líneas minimalistas", longDesc: "Pequeñas piezas geométricas que aportan un aire moderno, sobrio e ideal para combinar en múltiples perforaciones.", price: 420, img: "Aros Geométricos Mini.jpg" },
+                { id: "c7", name: "Aros Gota", desc: "Diseño fluido y orgánico", longDesc: "Pendientes en forma de gota con un acabado pulido impecable que atrapa la luz a cada movimiento. Un clásico contemporáneo.", price: 680, img: "Aros Gota.jpg" },
+                { id: "c8", name: "Aros Mabel", desc: "Silueta clásica y elegante", longDesc: "Aros de diseño atemporal ideales para añadir volumen y distinción sofisticada tanto a tus outfits casuales como formales.", price: 790, img: "Aros Mabel.png" },
+                { id: "c9", name: "Aros Malva", desc: "Estilo sutil y romántico", longDesc: "Argollas finas inspiradas en detalles naturales, ligeras y ultra cómodas para llevar contigo durante todo el día.", price: 620, img: "Aros Malva.jpg" },
+                { id: "c10", name: "Aros Mini Oro", desc: "Esenciales mini en baño de oro", longDesc: "La pieza básica que no puede faltar en tu joyero. Su tamaño minimalista es perfecto para un brillo discreto todos los días.", price: 390, img: "Aros Mini Oro.jpg" }
             ],
-            colgantes: [],
-            anillos: [],
-            ofertas: [],
-            novedades: []
+            colgantes: [
+                { id: "co1", name: "Colgante Medalla Solar", desc: "Cadena fina con medalla grabada", longDesc: "Un collar radiante que destaca por su medalla texturizada con destellos grabados. Baño de oro de alta resistencia.", price: 1250, img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=500&q=80" },
+                { id: "co2", name: "Gargantilla Esmeralda", desc: "Piedra central facetada", longDesc: "Una cadena delicada coronada por una circonia verde oliva que añade una nota de color sofisticada a tu cuello.", price: 1420, img: "https://images.unsplash.com/photo-1611085583191-a3b1a1a27d81?auto=format&fit=crop&w=500&q=80" }
+            ],
+            anillos: [
+                { id: "a1", name: "Anillo Trenzado", desc: "Diseño entrelazado ajustable", longDesc: "Una alianza moderna que simula una delicada trenza de metal pulido. Perfecto para llevar solo o combinado.", price: 890, img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=500&q=80" },
+                { id: "a2", name: "Anillo Sello Mini", desc: "Superficie lisa pulida", longDesc: "Reinterpretación minimalista del clásico anillo de sello, ideal para el dedo meñique o looks geométricos.", price: 950, img: "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=500&q=80" }
+            ],
+            ofertas: [
+                { id: "o1", name: "Set Everyday Oro", desc: "Dúo esencial de aros y cadena", longDesc: "Llévate juntos dos de nuestros mejores básicos combinados a un precio único por tiempo limitado.", price: 1690, img: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=500&q=80" }
+            ],
+            novedades: [
+                { id: "n1", name: "Brazalete Orgánico", desc: "Textura martillada irregular", longDesc: "Una pulsera rígida abierta que se adapta perfectamente y destaca por sus reflejos gracias a su acabado artesanal.", price: 1550, img: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=500&q=80" }
+            ]
         };
 
         function renderCatalog() {
@@ -196,19 +176,15 @@
                 const container = document.getElementById(`cat-${cat}`);
                 if (!container) return;
                 
-                if(backupCatalogData[cat].length === 0) {
+                if (catalogData[cat].length === 0) {
                     container.innerHTML = `<p style="text-align:center; padding: 40px; color: #8a7e76; font-size: 14px;">Próximamente nuevas piezas en esta sección.</p>`;
                     return;
                 }
 
-                container.innerHTML = backupCatalogData[cat].map((p, idx) => {
-                    // Si la imagen falla en cargar localmente, se aplica un estilo alternativo elegante con texto.
-                    return `
+                container.innerHTML = catalogData[cat].map((p, idx) => `
                     <div class="product-card ${p.outOfStock ? 'stock-out' : ''}" onclick="openModal('${cat}', ${idx})">
                         ${p.outOfStock ? '<span class="badge-out">Agotado</span>' : ''}
-                        <div class="product-image" style="background-image: url('${encodeURIComponent(p.img)}');" data-img="${p.img}">
-                            <span class="alt-text" style="display:none;">${p.name}</span>
-                        </div>
+                        <div class="product-image" style="background-image: url('${p.img}');"></div>
                         <div class="product-info">
                             <div class="product-title">${p.name}</div>
                             <div class="product-desc">${p.desc}</div>
@@ -217,19 +193,7 @@
                                 <button class="btn-add">${p.outOfStock ? 'Ver Info' : 'Ver Detalle'}</button>
                             </div>
                         </div>
-                    </div>`;
-                }).join('');
-            });
-
-            // Verificar si las imágenes existen localmente; si fallan, asegurar que la interfaz se mantenga limpia
-            document.querySelectorAll('.product-image').forEach(div => {
-                const bgUrl = div.style.backgroundImage.slice(5, -2);
-                const img = new Image();
-                img.src = bgUrl;
-                img.onerror = () => {
-                    div.style.backgroundImage = 'none';
-                    div.querySelector('.alt-text').style.display = 'block';
-                };
+                    </div>`).join('');
             });
         }
 
@@ -241,30 +205,20 @@
             if (targetSection) targetSection.classList.add('active');
             
             const btns = document.querySelectorAll('.category-btn');
-            if(btns[index]) btns[index].classList.add('active');
+            if (btns[index]) btns[index].classList.add('active');
             currentCatIndex = index;
         }
 
         function openModal(cat, index) {
-            const p = backupCatalogData[cat][index];
+            const p = catalogData[cat][index];
             lastSelectedProduct = p;
             
-            const modalImg = document.getElementById('modal-image');
-            modalImg.style.backgroundImage = `url('${encodeURIComponent(p.img)}')`;
-            modalImg.innerHTML = `<span class="alt-text" style="display:none;">${p.name}</span>`;
-            
-            const testImg = new Image();
-            testImg.src = p.img;
-            testImg.onerror = () => {
-                modalImg.style.backgroundImage = 'none';
-                modalImg.querySelector('.alt-text').style.display = 'block';
-            };
-
+            document.getElementById('modal-image').style.backgroundImage = `url('${p.img}')`;
             document.getElementById('modal-title').innerText = p.name;
             document.getElementById('modal-desc').innerText = p.longDesc;
             
             const modalBtn = document.getElementById('modal-btn');
-            if(p.outOfStock) {
+            if (p.outOfStock) {
                 modalBtn.innerText = "Artículo Agotado";
                 modalBtn.classList.add('disabled');
                 modalBtn.disabled = true;
@@ -286,6 +240,7 @@
             }
         }
 
+        // Navegación táctil (Swipe) de categorías
         let touchStartX = 0;
         document.getElementById('swipe-container').addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
         document.getElementById('swipe-container').addEventListener('touchend', e => {
@@ -310,4 +265,12 @@
             const total = cart.reduce((sum, item) => sum + item.price, 0);
             document.getElementById('cart-total').innerText = `Total: $${total}`;
             if (cart.length > 0) wsLink.classList.remove('disabled'); else wsLink.classList.add('disabled');
-        
+        }
+
+        function sendOrder(e) {
+            if (cart.length === 0) { e.preventDefault(); return; }
+            let itemCounts = {};
+            cart.forEach(item => itemCounts[item.name] = (itemCounts[item.name] || 0) + 1);
+            let total = cart.reduce((sum, item) => sum + item.price, 0);
+            let text = "*¡Hola CARLOTA! Me gustaría consultar disponibilidad por el siguiente pedido:*\n\n";
+            for (cons
