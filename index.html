@@ -8,7 +8,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
         body { background-color: #fcf6f4; color: #5a4f48; padding-bottom: 100px; }
         
-        /* Encabezado con la nueva secuencia de animación solicitada */
+        /* Encabezado con secuencia de animación */
         header { 
             background-color: #f5e6e1; 
             padding: 35px 15px; 
@@ -27,50 +27,15 @@
             margin-bottom: 15px; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
             display: inline-block;
-            /* 4s de giro + 4s estático con expansión = 8 segundos en total por ciclo completo */
             animation: secuenciaLogo 8s ease-in-out infinite;
         }
 
-        /* Línea de tiempo de la animación personalizada */
         @keyframes secuenciaLogo {
-            /* 0% a 50% (Primeros 4 segundos): Giro lento y pausado en tamaño normal */
-            0% {
-                transform: rotate(0deg);
-                border-radius: 50%;
-                width: 130px;
-                height: 130px;
-                margin-bottom: 15px;
-            }
-            50% {
-                transform: rotate(360deg);
-                border-radius: 50%;
-                width: 130px;
-                height: 130px;
-                margin-bottom: 15px;
-            }
-            /* 50% a 100% (Siguientes 4 segundos): Se queda estático en rotación y se expande al ancho completo */
-            55% {
-                transform: rotate(360deg);
-                border-radius: 0%;
-                width: 100vw;
-                height: 250px;
-                margin-bottom: 25px;
-            }
-            90% {
-                transform: rotate(360deg);
-                border-radius: 0%;
-                width: 100vw;
-                height: 250px;
-                margin-bottom: 25px;
-            }
-            /* Regreso rápido al estado inicial para reiniciar el bucle limpio */
-            100% {
-                transform: rotate(360deg);
-                border-radius: 50%;
-                width: 130px;
-                height: 130px;
-                margin-bottom: 15px;
-            }
+            0% { transform: rotate(0deg); border-radius: 50%; width: 130px; height: 130px; margin-bottom: 15px; }
+            50% { transform: rotate(360deg); border-radius: 50%; width: 130px; height: 130px; margin-bottom: 15px; }
+            55% { transform: rotate(360deg); border-radius: 0%; width: 100vw; height: 250px; margin-bottom: 25px; }
+            90% { transform: rotate(360deg); border-radius: 0%; width: 100vw; height: 250px; margin-bottom: 25px; }
+            100% { transform: rotate(360deg); border-radius: 50%; width: 130px; height: 130px; margin-bottom: 15px; }
         }
         
         header h1 { font-size: 32px; color: #a38752; letter-spacing: 6px; font-weight: 400; text-transform: uppercase; margin-bottom: 5px; }
@@ -89,16 +54,25 @@
         @keyframes entrance { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
         /* Tarjetas de Productos */
-        .product-card { background: #ffffff; border-radius: 12px; overflow: hidden; margin-bottom: 25px; border: 1px solid #ebd6cf; box-shadow: 0 4px 15px rgba(191, 163, 111, 0.04); transition: transform 0.4s ease; cursor: pointer; }
-        .product-image { width: 100%; height: 320px; background-color: #fcf6f4; background-size: cover; background-position: center; border-bottom: 1px solid #f5e6e1; }
+        .product-card { background: #ffffff; border-radius: 12px; overflow: hidden; margin-bottom: 25px; border: 1px solid #ebd6cf; box-shadow: 0 4px 15px rgba(191, 163, 111, 0.04); transition: transform 0.4s ease; }
+        .product-image { width: 100%; height: 320px; background-color: #fcf6f4; background-size: cover; background-position: center; border-bottom: 1px solid #f5e6e1; cursor: pointer; }
         
         .product-info { padding: 20px; }
         .product-title { font-size: 18px; font-weight: 500; color: #4a3f38; margin-bottom: 6px; letter-spacing: 0.5px; }
         .product-desc { font-size: 13px; color: #8a7e76; margin-bottom: 15px; line-height: 1.4; }
         .product-meta { display: flex; justify-content: space-between; align-items: center; }
         .product-price { font-size: 18px; color: #a38752; font-weight: 700; }
-        .btn-add { background: none; border: 1px solid #bfa36f; color: #bfa36f; padding: 6px 14px; border-radius: 15px; font-size: 12px; font-weight: 600; text-transform: uppercase; cursor: pointer; }
+        .product-actions { display: flex; gap: 8px; }
         
+        .btn-add { background: none; border: 1px solid #bfa36f; color: #bfa36f; padding: 6px 12px; border-radius: 15px; font-size: 11px; font-weight: 600; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; }
+        .btn-buy-now { background-color: #25d366; border: 1px solid #25d366; color: white; padding: 6px 12px; border-radius: 15px; font-size: 11px; font-weight: 600; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.3s ease; }
+        .btn-buy-now:hover { background-color: #20ba5a; }
+        
+        /* Estado Agotado */
+        .product-card.sold-out { opacity: 0.7; }
+        .product-card.sold-out .btn-buy-now { background-color: #ebd6cf; border-color: #ebd6cf; color: #bfa36f; pointer-events: none; }
+        .sold-out-badge { color: #d9534f; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+
         /* Estilos del Modal */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.98); z-index: 1000; overflow-y: auto; padding: 20px; }
         .modal-content { max-width: 400px; margin: 20px auto; }
@@ -132,7 +106,7 @@
         <button class="category-btn" onclick="switchCategory('colgantes', 1)">Colgantes</button>
         <button class="category-btn" onclick="switchCategory('anillos', 2)">Anillos</button>
         <button class="category-btn" onclick="switchCategory('ofertas', 3)">Ofertas Especiales</button>
-        <button class="category-btn" onclick="switchCategory('novedades', 4)">Novedades</button>
+        <button class="category-btn" onclick="switchCategory('pulseras', 4)">Pulseras</button>
     </div>
 
     <div class="container" id="swipe-container">
@@ -140,7 +114,7 @@
         <div id="cat-colgantes" class="products-section"></div>
         <div id="cat-anillos" class="products-section"></div>
         <div id="cat-ofertas" class="products-section"></div>
-        <div id="cat-novedades" class="products-section"></div>
+        <div id="cat-pulseras" class="products-section"></div>
     </div>
 
     <div id="product-modal" class="modal" onclick="closeModal()">
@@ -163,32 +137,33 @@
 
     <script>
         const WHATSAPP_PHONE = "59896438057"; 
-        const categories = ['caravanas', 'colgantes', 'anillos', 'ofertas', 'novedades'];
+        const categories = ['caravanas', 'colgantes', 'anillos', 'ofertas', 'pulseras'];
         let currentCatIndex = 0;
         let cart = [];
         let lastSelectedProduct = null;
 
         const backupCatalogData = {
             caravanas: [
-                { id: "ca1", name: "Aros Mini Oro", desc: "Esenciales de alta resistencia", longDesc: "Delicados aros minimalistas con acabado premium. Un básico atemporal diseñado para brillar de manera sutil en cualquier ocasión y resistir tu ritmo diario.", price: 390, img: "Aros Mini Oro.jpg" },
-                { id: "ca2", name: "Aros Gota", desc: "Silueta fluida y moderna", longDesc: "Pendientes con un diseño orgánico en forma de gota pulida. Capturan la luz bellamente, estilizando las facciones con elegancia contemporánea.", price: 690, img: "Aros Gota.jpg" },
-                { id: "ca3", name: "Aros Fiorella", desc: "Inspiración botánica exclusiva", longDesc: "Una propuesta artística con detalles florales finamente logrados. Ideales para realzar un atuendo sobrio o lucir en eventos especiales.", price: 750, img: "Aros Fiorella.jpg" },
-                { id: "ca4", name: "Aros Eloísa", desc: "Argolla texturizada premium", longDesc: "Combinación de un aro clásico pulido con un pendiente colgante de medalla labrada. Hipoalergénicos, ligeros y llenos de estilo.", price: 850, img: "Aros Eloisa.jpg" },
-                { id: "ca5", name: "Línea Eloísa Especial", desc: "Detalles finos y pulidos", longDesc: "Una variante exclusiva de nuestra línea más querida. Acabados tersos de alto brillo que combinan confort absoluto con una sofisticada presencia visual.", price: 850, img: "Eloisa.jpg" }
+                { id: "ca1", name: "Aros Mini Oro", desc: "Esenciales de alta resistencia", longDesc: "Delicados mini aros con un sofisticado acabado brillante, pensados para un diseño minimalista de uso diario continuo.", price: 300, img: "Aros Mini Oro.jpg", available: true },
+                { id: "ca2", name: "Aros Claribel", desc: "Diseño elegante y estilizado", longDesc: "Líneas fluidas con terminación pulida de alto brillo. Esta pieza se encuentra actualmente agotada en stock.", price: 810, img: "Aros Claribel.jpg", available: false },
+                { id: "ca3", name: "Aros Gota", desc: "Silueta moderna y orgánica", longDesc: "Pendientes en forma de gota que capturan los reflejos de luz de manera hermosa, aportando distinción natural.", price: 810, img: "Aros Gota.jpg", available: true },
+                { id: "ca4", name: "Aros Fiorella", desc: "Detalles de inspiración botánica", longDesc: "Fina pieza artística con textura vegetal idónea para resaltar tus looks casuales o de noche.", price: 750, img: "Aros Fiorella.jpg", available: true },
+                { id: "ca5", name: "Aros Eloísa", desc: "Argolla con medalla texturizada", longDesc: "Una perfecta fusión clásica y labrada en materiales hipoalergénicos ligeros con gran presencia visual.", price: 850, img: "Aros Eloisa.jpg", available: true }
             ],
             colgantes: [
-                { id: "co1", name: "Colgante Medalla Solar", desc: "Cadena fina regulable", longDesc: "Un dije grabado con un diseño místico de sol. Realizado con materiales hipoalergénicos de alta calidad, ideal para llevar solo o en capas.", price: 590, img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&auto=format&fit=crop&q=80" },
-                { id: "co2", name: "Gargantilla Eslabón Fino", desc: "Longitud: 45 cm", longDesc: "Gargantilla de eslabones pulidos que capturan la luz de manera espectacular. Un accesorio moderno y atemporal.", price: 480, img: "https://images.unsplash.com/photo-1611085583191-a3b1a1a27d81?w=600&auto=format&fit=crop&q=80" }
+                { id: "co1", name: "Colgante Medalla Solar", desc: "Cadena fina regulable", longDesc: "Un dije grabado con un diseño místico de sol. Realizado con materiales hipoalergénicos de alta calidad, ideal para llevar solo o en capas.", price: 590, img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&auto=format&fit=crop&q=80", available: true },
+                { id: "co2", name: "Gargantilla Eslabón Fino", desc: "Longitud: 45 cm", longDesc: "Gargantilla de eslabones pulidos que capturan la luz de manera espectacular. Un accesorio moderno y atemporal.", price: 480, img: "https://images.unsplash.com/photo-1611085583191-a3b1a1a27d81?w=600&auto=format&fit=crop&q=80", available: true }
             ],
             anillos: [
-                { id: "an1", name: "Anillo Trenzado Ajustable", desc: "Talle único adaptable", longDesc: "Diseño texturizado en forma de trenza que se adapta perfectamente a la medida de tu dedo. Cómodo, elegante y versátil.", price: 290, img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600&auto=format&fit=crop&q=80" },
-                { id: "an2", name: "Anillo Sello Minimalista", desc: "Superficie lisa pulida", longDesc: "El clásico anillo de sello reinterpretado con líneas finas y delicadas para la mujer de hoy. Un acento sofisticado para tus manos.", price: 320, img: "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=600&auto=format&fit=crop&q=80" }
+                { id: "an1", name: "Anillo Trenzado Ajustable", desc: "Talle único adaptable", longDesc: "Diseño texturizado en forma de trenza que se adapta perfectamente a la medida de tu dedo. Cómodo, elegante y versátil.", price: 290, img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600&auto=format&fit=crop&q=80", available: true },
+                { id: "an2", name: "Anillo Sello Minimalista", desc: "Superficie lisa pulida", longDesc: "El clásico anillo de sello reinterpretado con líneas finas y delicadas para la mujer de hoy. Un acento sofisticado para tus manos.", price: 320, img: "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=600&auto=format&fit=crop&q=80", available: true }
             ],
             ofertas: [
-                { id: "of1", name: "Set de Anillos Apilables", desc: "Promoción - 3 unidades", longDesc: "Tres diseños texturizados diferentes para usar juntos o separados. Aprovecha este precio especial de temporada.", price: 450, img: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&auto=format&fit=crop&q=80" }
+                { id: "of1", name: "Set de Anillos Apilables", desc: "Promoción - 3 unidades", longDesc: "Tres diseños texturizados diferentes para usar juntos o separados. Aprovecha este precio especial de temporada.", price: 450, img: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&auto=format&fit=crop&q=80", available: true }
             ],
-            novedades: [
-                { id: "no1", name: "Brazalete Rígido Orgánico", desc: "Nueva Colección", longDesc: "Inspirado en las texturas de la naturaleza, este brazalete abierto es la pieza de declaración que le falta a tu colección de temporada.", price: 750, img: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&auto=format&fit=crop&q=80" }
+            pulseras: [
+                { id: "pu1", name: "Pulsera África Gold", desc: "Eslabones de brillo premium", longDesc: "Brilla con un aire de distinción exótica. Una pulsera de acabado impecable idónea para combinar o usar como pieza central.", price: 740, img: "Pulsera África Gold.jpg", available: true },
+                { id: "pu2", name: "Brazalete Denver Negro", desc: "Contraste moderno y rústico", longDesc: "Un accesorio de vanguardia con acentos oscuros profundos que rompe con lo tradicional aportando un look urbano y sofisticado.", price: 690, img: "Brazalete Denver Negro.jpg", available: true }
             ]
         };
 
@@ -196,18 +171,28 @@
             categories.forEach(cat => {
                 const container = document.getElementById(`cat-${cat}`);
                 if (!container) return;
-                container.innerHTML = backupCatalogData[cat].map((p, idx) => `
-                    <div class="product-card" onclick="openModal('${cat}', ${idx})">
-                        <div class="product-image" style="background-image: url('${p.img}');"></div>
+                container.innerHTML = backupCatalogData[cat].map((p, idx) => {
+                    const textWhatsAppDirect = encodeURIComponent(`*¡Hola CARLOTA!* Me interesa comprar directamente el siguiente artículo:\n• *${p.name}* - $${p.price}\n\n¿Tienen disponibilidad?`);
+                    const urlWhatsAppDirect = `https://wa.me/${WHATSAPP_PHONE}?text=${textWhatsAppDirect}`;
+                    
+                    return `
+                    <div class="product-card ${!p.available ? 'sold-out' : ''}">
+                        <div class="product-image" style="background-image: url('${p.img}');" onclick="openModal('${cat}', ${idx})"></div>
                         <div class="product-info">
                             <div class="product-title">${p.name}</div>
                             <div class="product-desc">${p.desc}</div>
                             <div class="product-meta">
-                                <div class="product-price">$ ${p.price}</div>
-                                <button class="btn-add">Ver Detalle</button>
+                                <div class="product-price">
+                                    ${p.available ? `$ ${p.price}` : '<span class="sold-out-badge">Agotado</span>'}
+                                </div>
+                                <div class="product-actions">
+                                    <button class="btn-add" onclick="openModal('${cat}', ${idx})">Detalle</button>
+                                    ${p.available ? `<a href="${urlWhatsAppDirect}" target="_blank" class="btn-buy-now">Comprar</a>` : '<button class="btn-buy-now" disabled>Comprar</button>'}
+                                </div>
                             </div>
                         </div>
-                    </div>`).join('');
+                    </div>`;
+                }).join('');
             });
         }
 
@@ -225,17 +210,29 @@
 
         function openModal(cat, index) {
             const p = backupCatalogData[cat][index];
-            lastSelectedProduct = { name: p.name, price: p.price };
+            lastSelectedProduct = { name: p.name, price: p.price, available: p.available };
             document.getElementById('modal-image').style.backgroundImage = `url('${p.img}')`;
             document.getElementById('modal-title').innerText = p.name;
             document.getElementById('modal-desc').innerText = p.longDesc;
+            
+            const modalBtn = document.getElementById('modal-btn');
+            if (p.available) {
+                modalBtn.innerText = "Agregar al carrito";
+                modalBtn.style.backgroundColor = "#bfa36f";
+                modalBtn.disabled = false;
+            } else {
+                modalBtn.innerText = "Agotado";
+                modalBtn.style.backgroundColor = "#ebd6cf";
+                modalBtn.disabled = true;
+            }
+            
             document.getElementById('product-modal').style.display = 'block';
         }
 
         function closeModal() { document.getElementById('product-modal').style.display = 'none'; }
 
         function addToCartFromModal() {
-            if (lastSelectedProduct) {
+            if (lastSelectedProduct && lastSelectedProduct.available) {
                 addToCart(lastSelectedProduct.name, lastSelectedProduct.price);
                 closeModal();
             }
@@ -279,7 +276,7 @@
             document.getElementById('whatsapp-link').href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(text)}`;
         }
 
-        // Forzar renderizado inmediato al procesar el archivo HTML
+        // Renderizado inicial automático
         renderCatalog();
     </script>
 </body>
